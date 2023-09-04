@@ -45,7 +45,7 @@
 4. When viewing your order history, url is: `http://wasdat.fi/user/13/orders`.
 5. Change user id to see view other peoples order history. user id `3` exposes the flag.
 > `http://wasdat.fi/user/3/orders`
-![](./images/was1.PNG)
+![image](../images/was1.PNG)
 
 
 * Impact estimation:
