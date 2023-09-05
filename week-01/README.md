@@ -6,9 +6,9 @@
 
 #### Wasdat - View Basket
 
-**Title:** Anonymous user can modify site settings  
+**Title:** Unauthorized user can view other users baskets.
 
-**Description:** The endpoint that receives modified settings does not check for authentication. target.app's settings can be modified as an anonymous user with e.g. curl. The site seems to otherwise perform required checks so looks like this is simply an omission in the target.app's settings endpoint.  
+**Description:** Web Application has insecure direct object vulnerability. Application stores unecrypted basket id in session storage when querying basket items from users basket. Changing basket id enables unauthorized user to view other users basket.
 
 **Steps to produce:**  
 
@@ -25,17 +25,17 @@
 * Impact estimation:
     * Low Severity. User can make harm for other users such as add or remove items but can't access any
 * Mitigation:
-    * Modify settings endpoint to check for authentication&authorization properly
-        * See: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html (good: it's good to be able to provide a link or links that provide more information and guidance)
-        * See: https://imaginary-web-framework-targetapp-is-made-with.com/docs/best-practices/authorization (excellent: if you are able, it's great to refer to guidance that is most relevant to target application)
+    * Use more complex identifiers, random generated UUIDs for example.
+        * See ![4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
+    * Check two parameters: buid and authenticate for which user buid belongs to.
 
 ---
 
 #### Main Target - Wasdat.fi
 
-**Title:** Anonymous user can modify site settings  
+**Title:** Unauthorized user can view other users order history and access address information.
 
-**Description:** The endpoint that receives modified settings does not check for authentication. target.app's settings can be modified as an anonymous user with e.g. curl. The site seems to otherwise perform required checks so looks like this is simply an omission in the target.app's settings endpoint.  
+**Description:** Web Application has insecure direct object vulnerability.  Application enables unauthorized user to view other user order history by chaning user id in the url address.
 
 **Steps to produce:**  
 
@@ -49,11 +49,12 @@
 
 
 * Impact estimation:
-    * Low Severity. User can make harm for other users such as add or remove items but can't access any
+    * Low Severity. User can access other users order history and view their address information.
 * Mitigation:
-    * Modify settings endpoint to check for authentication&authorization properly
-        * See: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html (good: it's good to be able to provide a link or links that provide more information and guidance)
-        * See: https://imaginary-web-framework-targetapp-is-made-with.com/docs/best-practices/authorization (excellent: if you are able, it's great to refer to guidance that is most relevant to target application)
+    * Use more complex identifiers, random generated UUIDs for example.
+        * See ![4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
+    * Check two parameters: buid and authenticate for which user buid belongs to.  
+    * Don't include user id in url parameter.
 
 ---
 
@@ -61,7 +62,7 @@
 
 **Title:** Cross Site Forgery - Change victim username 
 
-**Description:** The endpoint that receives modified settings does not check for authentication. target.app's settings can be modified as an anonymous user with e.g. curl. The site seems to otherwise perform required checks so looks like this is simply an omission in the target.app's settings endpoint.  
+**Description:** Web Application allows cross site request and is vulnerable for forged websites to send http requests to application. This allows malicious websites execute `http` request towards the website.
 
 **Steps to produce:**  
 
