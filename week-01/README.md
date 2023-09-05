@@ -102,7 +102,9 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 3. Start sever `python3 app.py`
-4. Victim user is logged in to `http://wasdat.fi:3000` and goes to your url, in this case: `http://127.0.0.1:5000/` his username will be automically changed to `ab0197` and will be directed to his profile page.
+4. Victim user is logged in to `http://wasdat.fi:3000` and goes to your url, in this case: `http://127.0.0.1:5000/` his username will be automically changed to `ab0197` and will be directed to his profile page.  
+
+![image](../images/was3.png)
 
 
 * Impact estimation:
