@@ -21,7 +21,7 @@
 6. Change `bid` value for example: `3`. Navigate to any other view in the website and open `basket` again.
 7. Other users basket is now visible to you.  
 
-<img src="../images/was1.PNG" style="width:500;" />
+<img src="../images/was1.PNG" style="width:500px;" />
 
 * Impact estimation:
     * Low Severity. User can make harm for other users such as add or remove items but can't access any
@@ -49,7 +49,7 @@
 5. Change user id to see view other peoples order history. user id `3` exposes the flag.
 > `http://wasdat.fi/user/3/orders`  
 
-<img src="../images/was2.png" style="width:500;" />
+<img src="../images/was2.png" style="width:500px;" />
 
 
 * Impact estimation:
