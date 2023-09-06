@@ -46,6 +46,7 @@
 5. Change user id to see view other peoples order history. user id `3` exposes the flag.
 > `http://wasdat.fi/user/3/orders`
 ![image](../images/was1.PNG)
+<img src="../images/was1.PNG" style="width=600;">
 
 
 * Impact estimation:
