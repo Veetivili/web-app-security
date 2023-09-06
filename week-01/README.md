@@ -1,5 +1,11 @@
 # Web Application Security
 
+**Student number:** AB0197  
+**Name:** Veeti Hakala    
+**Group:** TIC21S  
+**Time management:** Approximately 28 hours
+
+
 ## Week 01  
 
 ### Authorization Bypass:
