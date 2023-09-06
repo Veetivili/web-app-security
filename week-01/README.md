@@ -125,10 +125,7 @@ if __name__ == '__main__':
 
 **Title:** Cross Site Forgery - Review product feature is vulnerable.
 
-**Description:** Web Application has vulnerability in Review product feature. This vulnerability allows malicious website to send product reviews under other users name. In addition even though not exploited in this implementation, there is following vulnerabilities: 
-    * csfr tokens are not hidden
-    * cookies are not set to expire after session
-    * double token validation is not implemented
+**Description:** Web Application has vulnerability in Review product feature. This vulnerability allows malicious website to send product reviews under other users name.
 
 **Steps to produce:**  
 
@@ -179,9 +176,6 @@ if __name__ == '__main__':
 * Impact estimation:
     * Low Severity. Malicious website can make harm for other users by posting product reviews under other users usernames.
 * Mitigation:
-    * Require http headers not to allow requests from from other origins.
-    * csfr tokens and session id's should not be visible to users.
-        * See: ![Token based mitigation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#token-based-mitigation)
     * Require `http headers` not to allow requests from from other origins.
         * See: ![Cross-Site Request Forgery preventation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers)
 
