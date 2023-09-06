@@ -171,7 +171,8 @@ if __name__ == '__main__':
 3. Start sever `python3 app.py`
 4. Victim user is logged in to `http://wasdat.fi/` and goes to your url, in this case: `http://127.0.0.1:5000/`. This makes automatic `http /post` request to `http://wasdat.fi/product/2` creating a new product review with value: `ab0197`. This new review is not visible to user untill he visits the page next time.  
 
-<img src="../images/was4.png" width="500" />
+<img src="../images/was4.png" width="500" />  
+
 <img src="../images/was5.png" width="500" />
 
 
