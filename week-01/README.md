@@ -19,15 +19,18 @@
 5. In `storage` tab, select `session storage`.  
     5. You can find attribute `bid` = `basket id`.
 6. Change `bid` value for example: `3`. Navigate to any other view in the website and open `basket` again.
-7. Other users basket is now visible to you.
+7. Other users basket is now visible to you.  
 
+<img src="../images/was1.PNG" style="width=500;" />
 
 * Impact estimation:
     * Low Severity. User can make harm for other users such as add or remove items but can't access any
 * Mitigation:
     * Use more complex identifiers, random generated UUIDs for example.
         * See ![4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
-    * Check two parameters: buid and authenticate for which user buid belongs to.
+    * Check two parameters: buid and authenticate for which user buid belongs to.  
+
+
 
 ---
 
@@ -44,9 +47,9 @@
 3. When logged in hover over dropdown navigation on top left and press `order history`.
 4. When viewing your order history, url is: `http://wasdat.fi/user/13/orders`.
 5. Change user id to see view other peoples order history. user id `3` exposes the flag.
-> `http://wasdat.fi/user/3/orders`
-![image](../images/was1.PNG)
-<img src="../images/was1.PNG" style="width=600;">
+> `http://wasdat.fi/user/3/orders`  
+
+<img src="../images/was2.png" style="width=500;" />
 
 
 * Impact estimation:
@@ -108,7 +111,7 @@ if __name__ == '__main__':
 3. Start sever `python3 app.py`
 4. Victim user is logged in to `http://wasdat.fi:3000` and goes to your url, in this case: `http://127.0.0.1:5000/` his username will be automically changed to `ab0197` and will be directed to his profile page.  
 
-![image](../images/was3.png)
+<img src="../images/was3.png" style="width=500;" />
 
 
 * Impact estimation:
@@ -166,10 +169,10 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 3. Start sever `python3 app.py`
-4. Victim user is logged in to `http://wasdat.fi/` and goes to your url, in this case: `http://127.0.0.1:5000/`. This makes automatic `http /post` request to `http://wasdat.fi/product/2` creating a new product review with value: `ab0197`. This new review is not visible to user untill he visits the page next time.
+4. Victim user is logged in to `http://wasdat.fi/` and goes to your url, in this case: `http://127.0.0.1:5000/`. This makes automatic `http /post` request to `http://wasdat.fi/product/2` creating a new product review with value: `ab0197`. This new review is not visible to user untill he visits the page next time.  
 
-![image](../images/was4.png)
-![image](../images/was5.png)
+<img src="../images/was4.png" style="width=500;" />
+<img src="../images/was5.png" style="width=500;" />
 
 
 * Impact estimation:
