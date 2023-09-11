@@ -48,12 +48,16 @@
 6. You also get the flag: CurlFlagEarned: WasFlag4_1{PasswordSetWithCurl}`.
 
 
-* Impact estimation:
-    * Low Severity. User can make harm for other users such as add or remove items but can't access any
+* Impact estimation: **High Severity**
+    1. Unauthorized Account Access: The vulnerability enables malicious actors to modify the password of any user account without knowing the original password. This can lead to unauthorized access to sensitive account information, manipulation of account settings, or misuse of the account in malicious activities.
+    * See: https://cwe.mitre.org/data/definitions/620.html
+    2. Potential for Mass Account Compromises: Given the ease with which this vulnerability can be exploited (using CURL), there is a risk of automated attacks, potentially compromising a large number of user accounts.
+    3. Data Leakage: Post unauthorized access, sensitive personal information related to the user might be accessed, leading to privacy breaches.
+
 * Mitigation:
-    * Use more complex identifiers, random generated UUIDs for example.
-        * See ![4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
-    * Check two parameters: buid and authenticate for which user buid belongs to.  
+    * Implement Old Password Check: Before allowing a user to change their password, they should be prompted to enter their current (old) password. This will ensure that only the legitimate owner of the account (or someone who has the current password) can change the password.
+        * See: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#change-password-feature
+    * Multi-Factor Authentication (MFA): Encourage or enforce users to set up multi-factor authentication. Even if an attacker changes the password, they will be unable to login without the second factor.
 
 
 ---
@@ -82,13 +86,26 @@
 <img src="../images/WAS6.PNG" width="500" />
 
 
-* Impact estimation:
-    * Low Severity. User can access other users order history and view their address information.
+* Impact estimation: **Critical**
+    * Unauthorized Account Access: The vulnerability allows attackers to modify JWT tokens and change user passwords without knowing the original ones. Such unauthorized access can lead to data breaches, account misuse, and unauthorized changes to user settings.
+
+    * Impersonation: By manipulating the JWT token, an attacker might be able to impersonate any user, potentially gaining access to privileged accounts.
+
+    * Potential for Mass Account Takeovers: Given the nature of JWT and its widespread usage, attackers can script attacks to potentially compromise numerous accounts.
+
+    * Data Leakage: Successful exploitation could lead to unauthorized access and exfiltration of sensitive user data.
+
 * Mitigation:
-    * Use more complex identifiers, random generated UUIDs for example.
-        * See ![4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
-    * Check two parameters: buid and authenticate for which user buid belongs to.  
-    * Don't include user id in url parameter.
+    * Disallow "none" Algorithm: Update the JWT processing logic to reject tokens that specify the "none" algorithm unless they are expected and strictly required for a specific reason.
+        * See: https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/
+    * Implement Stronger Signature Verification: Ensure that all JWT tokens are verified using a robust and secure method before being processed.
+    * Auditing and Monitoring: Introduce logging mechanisms for authentication and token processing. Monitor these logs for anomalies, such as repeated failed login attempts or unexpected use of the "none" algorithm.
+    * Update Libraries: Ensure that you are using the latest and most secure version of JWT processing libraries. Many libraries have addressed vulnerabilities related to the "none" algorithm.
+
+* Related OWASP CWE:
+    * CWE-347: Improper Verification of Cryptographic Signature
+    * CWE-306: Missing Authentication for Critical Function
+    * CWE-287: Improper Authentication
 
 ---
 
@@ -134,10 +151,33 @@ HMACSHA256(
 <img src="../images/WAS7.PNG" width="500" />
 
 
-* Impact estimation:
-    * Low Severity. User can make harm for other users by changing their usernames.
+* Impact estimation: **Critical**
+    * Unauthorized Account Access: Attackers who know the JWT secret can generate or modify JWT tokens, potentially leading to unauthorized access to any account, including admin or privileged ones.
+    * Impersonation: With the ability to manipulate the JWT token, an attacker can impersonate any user, gaining unauthorized access to potentially sensitive user data and operations.  
+
 * Mitigation:
-    * Require http headers not to allow requests from from other origins.
-        * See: ![Cross-Site Request Forgery preventation](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers)
+    1. Change the JWT Secret: Immediately rotate the JWT secret to a complex, unique value that is not based on any default or easily guessable value.
+
+    2. Secure Secret Management: Ensure that secrets are stored securely, such as in environment variables, secret management tools, or encrypted databases. They should never be hardcoded in the application or leaked in repositories.
+
+    3. Implement Stronger Signature Verification: Ensure that all JWT tokens are verified against the secret before being processed. Ensure the use of strong cryptographic algorithms for signing.
+
+    4. Periodic Secret Rotation: Establish a policy to rotate secrets periodically, thus reducing the window of exposure should they ever be compromised.
+
+    5. Auditing and Monitoring: Implement strict logging and monitoring mechanisms. Be alert for suspicious activities, such as unexpected spikes in login attempts or unauthorized data access patterns.
+
+    6. User Notification: Notify affected users about the vulnerability. Encourage password resets and review of account activities.
+
+    7. Update Libraries and Dependencies: Ensure the usage of updated, secure versions of JWT processing libraries and other dependencies.
+
+* Related OWASP CWE:  
+    * CWE-326: Inadequate Encryption Strength
+
+    * CWE-347: Improper Verification of Cryptographic Signature.
+
+    * CWE-798: Use of Hard-coded Credentials
+
+    * CWE-359: Exposure of Private Information ('Privacy Violation')
+
 ---
 
