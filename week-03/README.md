@@ -40,19 +40,28 @@
 
 <img src="../images/was8.png" width="500" />
 
-* Impact estimation: **Level of criticality here**
+* Impact estimation: **Medium Severity**
+    * Users can be tricked into executing arbitrary JavaScript code within their browsers, leading to data theft, session hijacking, or other malicious activities.  
+
+    * Malicious actors can embed the iframe to trick users into unknowingly playing malicious or distracting content.
     
 
-* Mitigation:
-    * 
-    * 
-    *  
-    *  
+* Mitigation:  
+
+    * Always validate and sanitize input. Do not trust any data received from the client.  
+
+    * Employ a content security policy (CSP) that restricts the sources from which content can be loaded.  
+
+    * Escape every piece of data correctly that's being dynamically added to the web page.
+
+        * See: 
+            * https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html  
+            * https://www.ibm.com/garage/method/practices/code/protect-from-cross-site-scripting/
 
 * Related OWASP CWE:
-    *   
-    *  
-    *  
+    * CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')  
+    * CWE-116: Improper Encoding or Escaping of Output  
+    * CWE-83: Improper Neutralization of Script in Attributes in a Web Page  
 
 
 ---
@@ -80,19 +89,25 @@
 <img src="../images/was9.png" width="500" />
 
 
-* Impact estimation: **Level of criticality here**
-    
+* Impact estimation: **Level of criticality here**  
 
+    * Malicious users can persistently store malicious scripts which can affect any user visiting the affected page. This can lead to a large scale compromise of user data, account hijacking, and spreading of malware.  
+
+    * Stored XSS is more dangerous than reflected XSS as it doesn't require a victim to click on a specially crafted link.  
+    
 * Mitigation:
-    * 
-    * 
-    *  
-    *  
+    
+    * Ensure that every piece of data that's being dynamically added to the web page is properly validated, sanitized, and escaped.  
+
+    * Use a security library/framework that auto-escapes output data and provides XSS safe APIs. Input validation should not allow unnecessary characters.  
+    
+    * See: 
+        * https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html  
+        * https://www.ibm.com/garage/method/practices/code/protect-from-cross-site-scripting/
 
 * Related OWASP CWE:
-    *   
-    *  
-    *  
+    * CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
+    * CWE-116: Improper Encoding or Escaping of Output
 
 ---
 
@@ -131,19 +146,23 @@ sqlmap -u sqlmap -u http://wasdat.fi:3000/rest/products/search?q= --current-db -
 <img src="../images/was12.png" width="500" />
 
 
-* Impact estimation: **Level of criticality here**
-    
+* Impact estimation: **Critical**  
+
+    * Complete compromise of the underlying database, potentially leading to unauthorized viewing of data, corrupting or deleting data, and other forms of data manipulation.
+    * Possibility to escalate the attack and gain control over the host machine or internal network in some cases.
 
 * Mitigation:
-    * 
-    * 
-    *  
-    *  
+
+    * Use parameterized queries or prepared statements to avoid direct inclusion of user inputs in SQL queries.  
+    * Ensure proper error handling is in place to prevent detailed error messages from revealing database information.  
+    * Regularly update and patch the database software to fix known vulnerabilities.  
+        * See:
+            * https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
 * Related OWASP CWE:
-    *   
-    *  
-    *  
+    * CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')  
+    * CWE-213: Intentional Information Disclosure  
+    * CWE-564: SQL-Injection through SOAP Message  
 
 ---
 
@@ -194,27 +213,30 @@ sqlmap -u http://wasdat.fi/search?product= -D current_db -T product_flag --colum
 ```
 sqlmap -u http://wasdat.fi/search?product= -D current_db -T product_flag -C flag --dump
 ```  
+ * <img src="../images/was13.png" width="500" />
 
-11. Flag:  
-    *. <img src="../images/was13.png" width="500" />
-
+**Flag:**  
 
 <img src="../images/was14.png" width="500" />
 
 
 * Impact estimation: **Level of criticality here**
     
+    * Unintended disclosure of sensitive data.
+    * Potential compromise of system integrity and availability.
 
 * Mitigation:
-    * 
-    * 
-    *  
-    *  
+
+    * Use parameterized queries or ORM tools to handle database interactions.
+    * Limit database permissions for web application users.
+    * Regularly audit and monitor database logs to detect suspicious activities.
+        * See:  
+            * https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
 * Related OWASP CWE:
-    *   
-    *  
-    *  
+    * CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')
+    * CWE-213: Intentional Information Disclosure
+    * CWE-942: Overly Permissive Cross-domain Whitelist
 
 ---
 
