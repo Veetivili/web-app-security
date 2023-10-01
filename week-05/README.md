@@ -59,44 +59,6 @@
 
 <img src="../images/was05-3.png" width="300" />  
 
----
-
-
- 
-
-
-
-
-* Impact estimation: **Estimate Severity**
-
-    
-
-* Mitigation:
-
-    
-
-* Related OWASP CWE:
-
-    
-
----
-
-
-#### Main target - Coupon codes stored in plain text
-
-**Title:** 
-
-**Description:** 
-
-**Steps to produce:**  
-
-1. 
-    1. <img src="../images/was21.png" width="300" />
-
-2. We found the `robots.txt` config file.
-
-
-
 * Impact estimation:  **Critical**  
 
     * Information Disclosure: The exploit allows unauthorized reading of system files, potentially exposing sensitive system information or user data.  
@@ -135,9 +97,23 @@
     * CWE-827: Improper Control of Document Type Definition: This is related to misconfigurations that can lead to XXE attacks.
 
     * CWE-776: Improper Restriction of Recursive Entity References in DTDs ('XML Bomb'): This can cause a Denial of Service (DoS) when exploited.
- 
+
+---
+
+#### Main target - Coupon codes stored in plain text
+
+**Title:** 
+
+**Description:** 
+
+**Steps to produce:**  
+
+* Impact estimation: **Estimate Severity**  
+
+* Mitigation:
 
 
+* Related OWASP CWE:
 ---
 
 
